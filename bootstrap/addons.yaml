@@ -37,8 +37,8 @@ spec:
             - $gitops/clusters/cluster0/addons/{{name}}
             releaseName: 'addon-{{.path.basename}}'
             ignoreMissingValueFiles: true
-        - repoURL: 'ssh://git@github.com:kriipke/gitops'
-          targetRevision: dev
+        - repoURL: ssh://git@github.com/kriipke/gitops
+          targetRevision: HEAD
           ref: gitops
       destination:
         server: https://kubernetes.default.svc
