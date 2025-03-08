@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -12,33 +13,30 @@ spec:
             repoURL: https://metallb.github.io/metallb
             chart: metallb
             targetRevision: 0.14.9
-
           - name: vault-secrets-operator
             namespace: vault
             repoURL: https://releases.hashicorp.com/vault-secrets-operator
             chart: vault-secrets-operator
-            targetRevision:  v0.10.0
-
+            targetRevision: v0.10.0
           - name: newrelic
             namespace: newrelic
             repoURL: https://helm-charts.newrelic.com
             chart: nri-bundle
-            targetRevision:  v1.0.0
+            targetRevision: v1.0.0
   template:
     metadata:
-      name: "{{name}}"
+      name: '{{name}}'
     spec:
       project: default
       source:
-        repoURL: "{{repoURL}}"
-        chart: "{{chart}}"
-        targetRevision: "{{targetRevision}}"
+        repoURL: '{{repoURL}}'
+        chart: '{{chart}}'
+        targetRevision: '{{targetRevision}}'
         helm:
-	 valueFiles:
-           - "../clusters/cluster0/addons/{{name}}"
+          valueFiles: ['../clusters/cluster0/addons/{{name}}']
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{namespace}}"
+        namespace: '{{namespace}}'
       syncPolicy:
         automated:
           prune: true
