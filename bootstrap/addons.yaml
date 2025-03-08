@@ -14,7 +14,7 @@ spec:
             targetRevision: 0.1.2
           - app: vault-secrets-operator
             namespace: vault
-            repoURL: https://releases.hashicorp.com/vault-secrets-operator
+            repoURL: https://releases.hashicorp.com
             targetRevision: 0.10.0
           - app: nri-bundle
             namespace: newrelic
