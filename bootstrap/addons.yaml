@@ -39,7 +39,7 @@ spec:
           targetRevision: '{{.targetRevision}}'
           helm:
             valueFiles:
-            - $gitops/clusters/cluster0/addons/{{.app}}
+            - $gitops/clusters/cluster0/addons/{{.app}}.yaml
             releaseName: 'addon-{{.app}}'
             ignoreMissingValueFiles: true
         - repoURL: git@github.com:kriipke/gitops.git
