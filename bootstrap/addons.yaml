@@ -15,7 +15,7 @@ spec:
           - app: vault-secrets-operator
             namespace: vault
             repoURL: https://releases.hashicorp.com/vault-secrets-operator
-            targetRevision: v0.10.0
+            targetRevision: 0.10.0
           - app: nri-bundle
             namespace: newrelic
             repoURL: https://helm-charts.newrelic.com
