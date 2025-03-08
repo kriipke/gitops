@@ -20,10 +20,10 @@ spec:
             namespace: newrelic
             repoURL: https://helm-charts.newrelic.com
             targetRevision: 5.0.115
-          - app: traefik
-            namespace: traefik
-            repoURL: https://traefik.github.io/charts
-            targetRevision: 34.4.1
+          #- app: traefik
+          #  namespace: traefik
+          #  repoURL: https://traefik.github.io/charts
+          #  targetRevision: 34.4.1
           - app: traefik-crds
             namespace: traefik
             repoURL: https://traefik.github.io/charts
