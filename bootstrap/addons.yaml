@@ -20,9 +20,14 @@ spec:
             namespace: newrelic
             repoURL: https://helm-charts.newrelic.com
             targetRevision: 5.0.115
+  # Determines whether go templating will be used in the `template` field below.
+  goTemplate: true
+  # Optional list of go templating options, see https://pkg.go.dev/text/template#Template.Option
+  # This is only relevant if `goTemplate` is true
+  goTemplateOptions: ["missingkey=error"]
   template:
     metadata:
-      name: 'addon-{{app}}'
+      name: 'addon-{{.app}}'
     spec:
       project: default
       syncPolicy: 
@@ -31,13 +36,13 @@ spec:
         syncOptions:
         - CreateNamespace=true 
       sources:
-        - repoURL: '{{repoURL}}'
-          chart: '{{app}}'
-          targetRevision: '{{targetRevision}}'
+        - repoURL: '{{.repoURL}}'
+          chart: '{{.app}}'
+          targetRevision: '{{.targetRevision}}'
           helm:
             valueFiles:
-            - $gitops/clusters/cluster0/addons/{{name}}
-            releaseName: 'addon-{{app}}'
+            - $gitops/clusters/cluster0/addons/{{.app}}
+            releaseName: 'addon-{{.app}}'
             ignoreMissingValueFiles: true
         - repoURL: git@github.com:kriipke/gitops.git
           targetRevision: HEAD
