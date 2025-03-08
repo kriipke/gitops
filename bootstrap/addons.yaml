@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons
+  namespace: argo-cd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: metallb
+            namespace: metallb-system
+            repoURL: https://metallb.github.io/metallb
+            chart: metallb
+            targetRevision: 0.14.9
+
+          - name: vault-secrets-operator
+            namespace: vault
+            repoURL: https://releases.hashicorp.com/vault-secrets-operator
+            chart: vault-secrets-operator
+            targetRevision:  v0.10.0
+
+          - name: newrelic
+            namespace: newrelic
+            repoURL: https://helm-charts.newrelic.com
+            chart: nri-bundle
+            targetRevision:  v1.0.0
+  template:
+    metadata:
+      name: "{{name}}"
+    spec:
+      project: default
+      source:
+        repoURL: "{{repoURL}}"
+        chart: "{{chart}}"
+        targetRevision: "{{targetRevision}}"
+        helm:
+	 valueFiles:
+           - "../clusters/cluster0/addons/{{name}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
