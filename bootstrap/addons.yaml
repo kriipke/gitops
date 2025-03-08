@@ -25,6 +25,11 @@ spec:
       name: 'addon-{{app}}'
     spec:
       project: default
+      syncPolicy: 
+        automated:
+          selfHeal: true    
+        syncOptions:
+        - CreateNamespace=true 
       sources:
         - repoURL: '{{repoURL}}'
           chart: '{{app}}'
@@ -40,8 +45,3 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{namespace}}'
-        syncOptions:
-          - CreateNamespace=true
-        automated:
-          prune: true
-          selfHeal: true
