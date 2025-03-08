@@ -25,7 +25,7 @@ spec:
             targetRevision: v1.0.0
   template:
     metadata:
-      name: '{{name}}'
+      name: 'addon-{{name}}'
     spec:
       project: default
       sources:
@@ -35,7 +35,9 @@ spec:
           helm:
             valueFiles:
             - $gitops/clusters/cluster0/addons/{{name}}
-        - repoURL: 'ssh://git@github.com/kriipke/gitops.git'
+            releaseName: 'addon-{{.path.basename}}'
+            ignoreMissingValueFiles: true
+        - repoURL: 'ssh://git@github.com:kriipke/gitops'
           targetRevision: dev
           ref: gitops
       destination:
