@@ -1,20 +1,18 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+---
+apiVersion: getambassador.io/v3alpha1
+kind: TLSContext
 metadata:
-  creationTimestamp: null
-  name: argo-cd
+  name: tls-context
 spec:
-  ingressClassName: default
-  rules:
-  - host: argo.opsdash.dev
-    http:
-      paths:
-      - backend:
-          service:
-            name: argo-cd-argocd-server
-            port:
-              number: 80
-        path: /
-        pathType: Prefix
-status:
-  loadBalancer: {}
+  secret: argo-opsdash-dev
+  min_tls_version: v1.2
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: mapping-with-tls-context
+spec:
+  hostname: "argo.opsdash.dev"
+  prefix: /
+  service: https://argo-cd-argocd-server:443
+  tls: tls-context
