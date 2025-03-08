@@ -28,12 +28,16 @@ spec:
       name: '{{name}}'
     spec:
       project: default
-      source:
-        repoURL: '{{repoURL}}'
-        chart: '{{chart}}'
-        targetRevision: '{{targetRevision}}'
-        helm:
-          valueFiles: ['../clusters/cluster0/addons/{{name}}']
+      sources:
+	- repoURL: '{{repoURL}}'
+	  chart: '{{chart}}'
+	  targetRevision: '{{targetRevision}}'
+	  helm:
+	    valueFiles:
+	    - $gitops/clusters/cluster0/addons/{{name}}
+	- repoURL: 'ssh://git@github.com/kriipke/gitops.git'
+	  targetRevision: dev
+	  ref: gitops
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{namespace}}'
