@@ -1,0 +1,22 @@
+global:
+  cluster: turingpi
+  customSecretName: new-relic-license
+  customSecretLicenseKey: NEW_RELIC_LICENSE
+
+infrastructure:
+  enabled: true
+
+prometheus:
+  enabled: true
+
+webhook:
+  enabled: true
+
+ksm:
+  enabled: true
+
+kubeEvents:
+  enabled: true
+
+logging:
+  enabled: true

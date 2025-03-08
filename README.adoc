@@ -1,0 +1,12 @@
+= GitOps Repository
+
+== Setup
+
+	NEW_RELIC_LICENSE_KEY=xxxxxxxxxxxxxxxxl
+
+	kubectl create ns newrelic
+	kubectl create secret generic new-relic-license \
+		--from-literal=NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY} \
+		--dry-run=client -o yaml \
+		| kubectl apply -n newrelic -f -
+
