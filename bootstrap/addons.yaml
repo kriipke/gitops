@@ -20,10 +20,6 @@ spec:
             namespace: newrelic
             repoURL: https://helm-charts.newrelic.com
             targetRevision: 5.0.115
-          - app: emissary
-            namespace: emissary
-            repoURL: https://kriipke.github.io/charts
-            targetRevision: 0.1.0
           - app: traefik
             namespace: traefik
             repoURL: https://traefik.github.io/charts
