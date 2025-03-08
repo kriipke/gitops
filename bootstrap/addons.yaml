@@ -8,31 +8,31 @@ spec:
   generators:
     - list:
         elements:
-          - chart: metallb
+          - app: metallb
             namespace: metallb-system
             repoURL: https://metallb.github.io/metallb
             targetRevision: 0.14.9
-          - chart: vault-secrets-operator
+          - app: vault-secrets-operator
             namespace: vault
             repoURL: https://releases.hashicorp.com/vault-secrets-operator
             targetRevision: v0.10.0
-          - chart: nri-bundle
+          - app: nri-bundle
             namespace: newrelic
             repoURL: https://helm-charts.newrelic.com
             targetRevision: v1.0.0
   template:
     metadata:
-      name: 'addon-{{chart}}'
+      name: 'addon-{{app}}'
     spec:
       project: default
       sources:
         - repoURL: '{{repoURL}}'
-          chart: '{{chart}}'
+          chart: '{{app}}'
           targetRevision: '{{targetRevision}}'
           helm:
             valueFiles:
             - $gitops/clusters/cluster0/addons/{{name}}
-            releaseName: 'addon-{{chart}}'
+            releaseName: 'addon-{{app}}'
             ignoreMissingValueFiles: true
         - repoURL: git@github.com:kriipke/gitops.git
           targetRevision: HEAD
