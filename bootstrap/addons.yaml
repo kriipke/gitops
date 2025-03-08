@@ -32,7 +32,7 @@ spec:
           helm:
             valueFiles:
             - $gitops/clusters/cluster0/addons/{{name}}
-            releaseName: 'addon-{{.path.basename}}'
+            releaseName: 'addon-{{chart}}'
             ignoreMissingValueFiles: true
         - repoURL: git@github.com:kriipke/gitops.git
           targetRevision: HEAD
