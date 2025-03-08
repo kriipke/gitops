@@ -10,8 +10,8 @@ spec:
         elements:
           - app: metallb
             namespace: metallb-system
-            repoURL: https://metallb.github.io/metallb
-            targetRevision: 0.14.9
+            repoURL: https://kriipke.github.io/charts
+            targetRevision: 0.1.0
           - app: vault-secrets-operator
             namespace: vault
             repoURL: https://releases.hashicorp.com/vault-secrets-operator
