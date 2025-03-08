@@ -24,6 +24,14 @@ spec:
             namespace: emissary
             repoURL: https://kriipke.github.io/charts
             targetRevision: 0.1.0
+          - app: traefik
+            namespace: traefik
+            repoURL: https://traefik.github.io/charts
+            targetRevision: 34.4.1
+          - app: traefik-crds
+            namespace: traefik
+            repoURL: https://traefik.github.io/charts
+            targetRevision: 1.5.0
   # Determines whether go templating will be used in the `template` field below.
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]

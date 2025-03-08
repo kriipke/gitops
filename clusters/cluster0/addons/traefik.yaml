@@ -1,0 +1,80 @@
+gateway:
+  listeners:
+    web:
+      port: 8000
+      protocol: HTTP
+      namespacePolicy:  # @schema type:[string, null]
+    websecure:
+      port: 8443
+      protocol: HTTPS
+      # -- Add certificates for TLS or HTTPS protocols. See [GatewayTLSConfig](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io%2fv1.GatewayTLSConfig)
+      certificateRefs:
+        - name: star-opsdash-dev
+volumes:
+ - name: star-opsdash-dev
+   mountPath: "/certs"
+   type: secret
+
+ingressRoute:
+  dashboard:
+    enabled: false
+
+additionalArguments:
+- "--api.insecure=true"
+
+extraObjects:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: traefik-api
+    spec:
+      type: ClusterIP
+      selector:
+        app.kubernetes.io/name: traefik
+        app.kubernetes.io/instance: traefik-default
+      ports:
+      - port: 8080
+        name: traefik-web
+        targetPort: 8080
+        protocol: TCP
+      - port: 8443
+        name: traefik-websecure
+        targetPort: 8443
+        protocol: TCP
+
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      name: traefik-dashboard-auth-secret
+    type: kubernetes.io/basic-auth
+    stringData:
+      username: admin
+      password: changeme
+
+  - apiVersion: traefik.io/v1alpha1
+    kind: Middleware
+    metadata:
+      name: traefik-dashboard-auth
+    spec:
+      basicAuth:
+        secret: traefik-dashboard-auth-secret
+
+  - apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: traefik-dashboard
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.middlewares: default-traefik-dashboard-auth@kubernetescrd
+    spec:
+      rules:
+      - host: traefik.opsdash.dev
+        http:
+          paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: traefik-api
+                port:
+                  name: traefik
