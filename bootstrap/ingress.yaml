@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: argo-cd
+spec:
+  ingressClassName: default
+  rules:
+  - host: argo.opsdash.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: argo-cd-argocd-server
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
